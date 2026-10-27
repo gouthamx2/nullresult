@@ -1,72 +1,36 @@
-# NullResult 🚀
+# NullResult
 
-> **"Science publishes what worked. We keep what didn't."**
-
-NullResult is a searchable, citable library of failed experiments and negative results. Researchers search before starting a project to avoid repeating known dead ends, log their own failed attempts, and receive a permanent, citable ID (`NR-YYYY-NNNN`).
+An open-access registry and searchable repository for negative results, failed experiments, and methodological dead ends in scientific research.
 
 ---
 
-## 🛠 Tech Stack
+## Overview
 
-- **Next.js 15** (App Router, Server Actions, React 19)
-- **TypeScript** & **Tailwind CSS** (clean academic-grade UI)
-- **MongoDB Atlas** (text indexing, aggregation, atomic counters)
-- **NextAuth.js** (credentials auth, bcrypt password hashing, avatar generation)
-- **DiceBear API** (automatic researcher profile avatars)
+Academic literature suffers from severe publication bias: journals predominantly publish successful outcomes and statistically significant findings. Unsuccessful trials, flawed methodologies, and disproven hypotheses are rarely documented, creating the classic "file-drawer problem."
 
----
+The consequence is massive systemic inefficiency: researchers routinely duplicate failed protocols, waste grant funding, and consume valuable lab hours repeating mistakes others have already made and discarded.
 
-## 🌟 Key Features
-
-1. **Home (`/`)**:
-   - Headline & tagline
-   - Large search bar
-   - **Contributor avatar preview** under search button showing active researchers who posted
-   - **Dead-end counter**: total entries & estimated researcher-hours saved (`entries × 40h`)
-   - 6 most recent entries as structured cards with field badges & tags
-2. **Search (`/search?q=&field=`)**:
-   - Full-text search over titles, hypotheses, methods, outcomes, and tags
-   - Field filters (Materials, Chemistry, Biology, Computer Science, Physics, Education, etc.)
-   - Dynamic banner: *"N people already tried something similar"*
-   - Encouraging empty state linking to log form
-3. **Log a Failure (`/log`)**:
-   - Complete form: Title, Field, Hypothesis, Method, What happened, Probable reason, Tags, Contributor info
-   - Validation & honeypot spam prevention
-   - Auto-populates contributor name and links to logged-in user profile
-   - Generates sequential atomic `NR-YYYY-NNNN` ID and redirects to the entry page
-4. **Entry Page (`/entry/[nr_id]`)**:
-   - Clear sections: Hypothesis, Method, What happened, Probable reason
-   - "Copy link" button
-   - "Cite this" button copying standard citation format:
-     `Contributor Name. "Title." NullResult, NR-ID, Month YYYY. URL`
-5. **Authentication & Profiles**:
-   - Create account (`/auth/register`) with live profile photo preview
-   - Login (`/auth/login`) with NextAuth session management
-   - Profile pages (`/profile/[userId]`) showing researcher avatar, bio, and their logged failures
+**NullResult** addresses this gap by making negative findings discoverable, reproducible, and citable. Researchers can search existing records before designing protocols, document their own negative outcomes with structured post-mortems, and receive an identifier (`NR-YYYY-NNNN`) suitable for academic citation.
 
 ---
 
-## 🚀 Running Locally
+## Core Capabilities
 
-```bash
-# 1. Install dependencies
-npm install
+### 1. Pre-Experiment Search
+- Full-text search across titles, hypotheses, experimental protocols, observed failures, and tags.
+- Field-specific filtering across Disciplines: Materials Science, Chemistry, Biology, Computer Science, Physics, Environmental Science, and Engineering.
+- Query intent matching to quickly show how many independent teams attempted comparable protocols.
 
-# 2. Seed database (17 realistic entries across 6 fields)
-npm run seed
+### 2. Structured Failure Logging
+Every logged experiment requires standardized reporting fields designed to diagnose root causes:
+- **Hypothesis**: The original premise being tested.
+- **Protocol / Method**: Exact reagents, equipment, conditions, and procedures used.
+- **Observed Outcome**: Empirical measurements and why the attempt failed.
+- **Probable Mechanism / Post-Mortem**: Technical analysis of why the hypothesis broke down.
+- **Photographic / Diagnostic Evidence**: Supporting microscopy, plots, or setup photos.
 
-# 3. Start development server
-npm run dev
-```
+### 3. Persistent Identifiers & Standard Citation
+Every accepted entry is assigned an atomic sequential reference number formatted as:
 
-Visit [http://localhost:3000](http://localhost:3000).
-
----
-
-## 🧪 Demo Search Queries
-
-- `banana peel` or `bioplastic` → 2 entries (Thomas, Menon)
-- `nanoparticles` → Green synthesis of silver nanoparticles
-- `resnet` or `leaf disease` → Overfitting in ResNet-18
-- `peltier` → DIY PCR thermal cycler
-- `moringa` → Microplastics removal failure
+```text
+NR-YYYY-NNNN   (e.g., NR-2026-0001)
