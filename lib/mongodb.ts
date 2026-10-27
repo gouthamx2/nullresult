@@ -1,8 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
-if (!uri) throw new Error('Missing env var: MONGODB_URI');
-
 const options = {
   serverApi: { version: ServerApiVersion.v1, strict: false, deprecationErrors: true },
 };
@@ -14,7 +11,14 @@ declare global {
 
 let clientPromise: Promise<MongoClient>;
 
-if (process.env.NODE_ENV === 'development') {
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  // During build / static collection if MONGODB_URI is not yet configured,
+  // do not throw at import time so Webpack and Next.js can compile pages.
+  clientPromise = Promise.reject(new Error('Missing env var: MONGODB_URI'));
+  clientPromise.catch(() => {});
+} else if (process.env.NODE_ENV === 'development') {
   if (!global._mongoClientPromise) {
     const client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
